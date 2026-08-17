@@ -8,7 +8,7 @@ import Editor from "./pages/WebSiteEditor";
 import LiveSite from "./pages/LiveSite";
 import Pricing from "./pages/Pricing";
 
-export const serverURL = "http://localhost:3002";
+export const serverURL = import.meta.env.VITE_API_URL || "http://localhost:3002";
 
 const App = () => {
     return (

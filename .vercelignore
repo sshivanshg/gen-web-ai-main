@@ -1,0 +1,7 @@
+server
+README.md
+assets
+.env
+.env.local
+.git
+node_modules
