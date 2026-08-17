@@ -4,7 +4,8 @@
   "framework": "vite",
   "env": {
     "VITE_API_URL": {
-      "description": "Backend API URL"
+      "description": "Backend API URL",
+      "value": "https://gen-web-ai-main.onrender.com"
     }
   }
 }
