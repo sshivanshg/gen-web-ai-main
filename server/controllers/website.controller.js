@@ -204,7 +204,7 @@ export const deploy = async (req, res) => {
         }
         website.deployed = true;
 
-        website.deployedUrl = `${FRONTEND_URL}/site/${website.slug}`;
+        website.deployedUrl = `${FRONTEND_URL.replace(/\/$/, "")}/site/${website.slug}`;
 
         await website.save();
 

@@ -238,11 +238,39 @@ const WebSiteEditor = () => {
 
     return (
         <div className="flex h-screen w-screen overflow-hidden bg-paper text-ink">
-            <aside className="hidden w-96 flex-col border-r border-line bg-cream/80 lg:flex">
+            <aside className="hidden w-80 shrink-0 flex-col border-r border-line bg-cream/80 xl:flex">
                 <ChatPane {...chatProps} />
             </aside>
 
-            <div className="flex flex-1 flex-col">
+            <div className="hidden min-w-0 flex-[0_0_38%] flex-col border-r border-line bg-cream lg:flex">
+                <div className="flex h-14 shrink-0 items-center justify-between border-b border-line px-4">
+                    <span className="text-sm font-medium tracking-wide">
+                        index.html
+                    </span>
+                    <span className="text-[11px] uppercase tracking-[0.2em] text-muted">
+                        Code
+                    </span>
+                </div>
+
+                <div className="min-h-0 flex-1">
+                    <Editor
+                        theme="vs"
+                        value={code}
+                        language="html"
+                        onChange={(v) => setCode(v || "")}
+                        options={{
+                            minimap: { enabled: false },
+                            fontSize: 13,
+                            lineNumbersMinChars: 3,
+                            wordWrap: "on",
+                            scrollBeyondLastLine: false,
+                            automaticLayout: true,
+                        }}
+                    />
+                </div>
+            </div>
+
+            <div className="flex min-w-0 flex-1 flex-col">
                 <div className="flex h-14 items-center justify-between border-b border-line bg-cream/80 px-4">
                     <span className="text-[11px] uppercase tracking-[0.2em] text-muted">
                         Preview
@@ -259,12 +287,12 @@ const WebSiteEditor = () => {
 
                         <button
                             onClick={() => setShowChat(true)}
-                            className="cursor-pointer rounded-full p-2 text-muted hover:bg-paper lg:hidden"
+                            className="cursor-pointer rounded-full p-2 text-muted hover:bg-paper xl:hidden"
                         >
                             <MessageSquare size={18} />
                         </button>
                         <button
-                            className="cursor-pointer rounded-full p-2 text-muted hover:bg-paper"
+                            className="cursor-pointer rounded-full p-2 text-muted hover:bg-paper lg:hidden"
                             onClick={() => setShowCode(true)}
                         >
                             <Code2 size={18} />
@@ -325,6 +353,13 @@ const WebSiteEditor = () => {
                             value={code}
                             language="html"
                             onChange={(v) => setCode(v || "")}
+                            options={{
+                                minimap: { enabled: false },
+                                fontSize: 13,
+                                wordWrap: "on",
+                                scrollBeyondLastLine: false,
+                                automaticLayout: true,
+                            }}
                         />
                     </motion.div>
                 )}
