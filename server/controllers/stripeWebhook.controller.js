@@ -4,6 +4,12 @@ import stripe from "../utils/stripe.js";
 
 export const stripeWebhook = async (req, res) => {
     try {
+        // Skip if Stripe is not configured
+        if (!stripe) {
+            console.warn("⚠️  Stripe webhook received but Stripe is not configured");
+            return res.status(200).json({ message: "Stripe not configured, skipping webhook" });
+        }
+
         const signature = req.headers["stripe-signature"];
         let event = await stripe.webhooks.constructEvent(
             req.body,
