@@ -7,6 +7,7 @@ import { clearUserData, setUserData } from "../redux/userSlice";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { BRAND } from "../brand";
 import { serverURL } from "../config";
+import { clearAuthToken, setAuthToken } from "../authToken";
 
 const Auth = () => {
     useDocumentTitle(`Auth — ${BRAND.name}`);
@@ -33,13 +34,16 @@ const Auth = () => {
             if (mode === "signup") payload.name = name;
 
             const result = await axios.post(`${serverURL}${endpoint}`, payload, {
-                withCredentials: true,
             });
 
+            if (result.data.token) {
+                setAuthToken(result.data.token);
+            }
             dispatch(setUserData(result.data.user));
             navigate(returnTo, { replace: true });
         } catch (err) {
             dispatch(clearUserData());
+            clearAuthToken();
             setError(err.response?.data?.message || "Something went wrong");
         } finally {
             setLoading(false);

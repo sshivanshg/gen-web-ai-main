@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BRAND } from "../brand";
 import { clearUserData } from "../redux/userSlice";
 import { serverURL } from "../config";
+import { clearAuthToken } from "../authToken";
 
 const Navbar = ({ children }) => {
     const navigate = useNavigate();
@@ -14,8 +15,9 @@ const Navbar = ({ children }) => {
 
     const handleLogout = async () => {
         try {
-            await axios.post(`${serverURL}/api/auth/logout`, {}, { withCredentials: true });
+            await axios.post(`${serverURL}/api/auth/logout`, {});
         } finally {
+            clearAuthToken();
             dispatch(clearUserData());
             navigate("/");
         }

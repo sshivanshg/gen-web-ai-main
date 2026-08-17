@@ -12,16 +12,26 @@ import Auth from "./pages/Auth";
 import RequireAuth from "./components/RequireAuth";
 import { clearUserData, setUserData } from "./redux/userSlice";
 import { serverURL } from "./config";
+import { getAuthToken } from "./authToken";
 
 const App = () => {
     const dispatch = useDispatch();
     const [ready, setReady] = useState(false);
 
     useEffect(() => {
+        axios.defaults.withCredentials = true;
+        const interceptor = axios.interceptors.request.use((config) => {
+            const token = getAuthToken();
+            if (token) {
+                config.headers = config.headers || {};
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
+        });
+
         const loadUser = async () => {
             try {
                 const result = await axios.get(`${serverURL}/api/auth/me`, {
-                    withCredentials: true,
                 });
                 dispatch(setUserData(result.data.user));
             } catch {
@@ -32,6 +42,9 @@ const App = () => {
         };
 
         loadUser();
+        return () => {
+            axios.interceptors.request.eject(interceptor);
+        };
     }, [dispatch]);
 
     if (!ready) {
