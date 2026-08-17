@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { serverURL } from "../App";
+import { serverURL } from "../config";
 import { Code2, MessageSquare, Monitor, Rocket, Send, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Editor from "@monaco-editor/react";
@@ -166,12 +166,6 @@ const WebSiteEditor = () => {
 
     useEffect(() => {
         let cancelled = false;
-        setWebsite(null);
-        setCode("");
-        setMessages([]);
-        setError("");
-        setPrompt("");
-        setUpdateLoading(false);
 
         const handleGetWebsite = async () => {
             try {

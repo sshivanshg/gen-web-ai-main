@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 import axios from "axios";
-import { serverURL } from "../App";
+import { serverURL } from "../config";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import Navbar from "../components/Navbar";
 import { BRAND } from "../brand";

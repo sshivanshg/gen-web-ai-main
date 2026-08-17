@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { serverURL } from "../App";
+import { serverURL } from "../config";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import Navbar from "../components/Navbar";
 import { BRAND } from "../brand";

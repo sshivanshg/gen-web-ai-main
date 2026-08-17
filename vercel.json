@@ -3,9 +3,12 @@
   "outputDirectory": "client/dist",
   "framework": "vite",
   "env": {
-    "VITE_API_URL": {
-      "description": "Backend API URL",
-      "value": "https://gen-web-ai-main.onrender.com"
+    "VITE_API_URL": "https://gen-web-ai-main.onrender.com"
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  }
+  ]
 }
