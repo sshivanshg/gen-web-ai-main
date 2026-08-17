@@ -40,7 +40,9 @@ const Generate = () => {
 
             setLoading(false);
             setProgress(100);
-            navigate(`/editor/${result.data.websiteId}`);
+            navigate("/projects", {
+                state: { focusProjectId: result.data.websiteId },
+            });
         } catch (error) {
             setLoading(false);
             console.log(error);

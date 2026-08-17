@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { ArrowLeft, Check, RocketIcon, Share2 } from "lucide-react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { serverURL } from "../config";
 import useDocumentTitle from "../hooks/useDocumentTitle";
@@ -25,11 +25,14 @@ const formatWhen = (value) => {
 const Dashboard = () => {
     useDocumentTitle(`Projects — ${BRAND.name}`);
     const navigate = useNavigate();
+    const location = useLocation();
     const [websites, setWebsites] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [copiedId, setCopiedId] = useState(null);
+    const focusProjectId = location.state?.focusProjectId;
+    const focusedProjectRef = useRef(null);
 
     useEffect(() => {
         const handleGetAllWebsites = async () => {
@@ -53,6 +56,15 @@ const Dashboard = () => {
 
         handleGetAllWebsites();
     }, []);
+
+    useEffect(() => {
+        if (focusProjectId && focusedProjectRef.current) {
+            focusedProjectRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        }
+    }, [focusProjectId, websites.length]);
 
     const promptLog = useMemo(() => {
         return websites
@@ -223,7 +235,16 @@ const Dashboard = () => {
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ delay: i * 0.04 }}
-                                            className="overflow-hidden rounded-3xl border border-line bg-cream shadow-[0_24px_50px_-32px_rgba(44,38,34,0.28)]"
+                                            ref={
+                                                focusProjectId === w._id
+                                                    ? focusedProjectRef
+                                                    : null
+                                            }
+                                            className={`overflow-hidden rounded-3xl border bg-cream shadow-[0_24px_50px_-32px_rgba(44,38,34,0.28)] ${
+                                                focusProjectId === w._id
+                                                    ? "border-accent/40 ring-1 ring-accent/15"
+                                                    : "border-line"
+                                            }`}
                                         >
                                             <div className="grid gap-0 md:grid-cols-[220px_1fr]">
                                                 <button
