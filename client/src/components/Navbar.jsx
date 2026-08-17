@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BRAND } from "../brand";
 
 const Navbar = ({ children }) => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const onProjects = pathname === "/projects" || pathname === "/dashboard";
 
     return (
         <header className="sticky top-0 z-50 border-b border-line/80 bg-cream/75 backdrop-blur-xl">
@@ -16,7 +18,19 @@ const Navbar = ({ children }) => {
                         {BRAND.name}
                     </span>
                 </button>
-                <div className="flex items-center gap-5">{children}</div>
+                <div className="flex items-center gap-5">
+                    <NavLink
+                        to="/projects"
+                        className={`hidden text-[13px] tracking-wide transition sm:inline ${
+                            onProjects
+                                ? "text-ink"
+                                : "text-muted hover:text-ink"
+                        }`}
+                    >
+                        Projects
+                    </NavLink>
+                    {children}
+                </div>
             </div>
         </header>
     );

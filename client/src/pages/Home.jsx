@@ -37,12 +37,6 @@ const Home = () => {
                 >
                     Plans
                 </button>
-                <button
-                    className="rounded-full border border-line bg-cream px-4 py-2 text-[13px] tracking-wide text-ink transition hover:border-ink/20"
-                    onClick={() => navigate("/dashboard")}
-                >
-                    Library
-                </button>
             </Navbar>
 
             <section className="px-6 pb-28 pt-28 text-center md:pt-36">
