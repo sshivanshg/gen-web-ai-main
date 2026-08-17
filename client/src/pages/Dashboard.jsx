@@ -146,7 +146,7 @@ const Dashboard = () => {
                     className="mb-8 sm:mb-10"
                 >
                     <p className="mb-2 text-[11px] uppercase tracking-[0.24em] text-muted">
-                        Shivansh Studio
+                        Brixloop Studio
                     </p>
                     <h1 className="font-display text-4xl font-medium tracking-tight sm:text-5xl">
                         Projects

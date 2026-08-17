@@ -54,7 +54,7 @@ const Home = () => {
                 >
                     Agentic websites
                     <br />
-                    <span className="italic text-accent">by Shivansh.</span>
+                    <span className="italic text-accent">by Brixloop.</span>
                 </motion.h1>
 
                 <motion.p

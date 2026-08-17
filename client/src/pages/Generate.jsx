@@ -104,7 +104,7 @@ const Generate = () => {
                         Agentic brief
                     </p>
                     <h1 className="font-display text-4xl font-medium leading-tight tracking-tight md:text-5xl">
-                        What should Shivansh Studio{" "}
+                        What should Brixloop{" "}
                         <span className="italic text-accent">generate</span>?
                     </h1>
 
