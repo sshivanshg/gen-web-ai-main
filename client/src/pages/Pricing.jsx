@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { ArrowLeft, Check } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import axios from "axios";
 import { motion } from "motion/react";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import Navbar from "../components/Navbar";
 import { BRAND } from "../brand";
+import { serverURL } from "../config";
 
 const plans = [
     {
@@ -55,11 +58,41 @@ const plans = [
 const Pricing = () => {
     useDocumentTitle(`Plans — ${BRAND.name}`);
     const navigate = useNavigate();
+    const { userData } = useSelector((state) => state.user);
 
     const [loading, setLoading] = useState("");
+    const [checkoutUrl, setCheckoutUrl] = useState("");
 
-    const handleBuy = async () => {
-        navigate("/generate");
+    useEffect(() => {
+        if (checkoutUrl) {
+            window.location.assign(checkoutUrl);
+        }
+    }, [checkoutUrl]);
+
+    const handleBuy = async (planKey) => {
+        if (planKey === "free") {
+            navigate("/generate");
+            return;
+        }
+
+        if (!userData) {
+            navigate("/auth", { state: { from: { pathname: "/pricing" } } });
+            return;
+        }
+
+        setLoading(planKey);
+        try {
+            const result = await axios.post(
+                `${serverURL}/api/billing`,
+                { plan: planKey },
+                { withCredentials: true },
+            );
+            setCheckoutUrl(result.data.url);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading("");
+        }
     };
 
     return (

@@ -1,10 +1,25 @@
+import axios from "axios";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { BRAND } from "../brand";
+import { clearUserData } from "../redux/userSlice";
+import { serverURL } from "../config";
 
 const Navbar = ({ children }) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const dispatch = useDispatch();
+    const { userData } = useSelector((state) => state.user);
     const onProjects = pathname === "/projects" || pathname === "/dashboard";
+
+    const handleLogout = async () => {
+        try {
+            await axios.post(`${serverURL}/api/auth/logout`, {}, { withCredentials: true });
+        } finally {
+            dispatch(clearUserData());
+            navigate("/");
+        }
+    };
 
     return (
         <header className="sticky top-0 z-50 border-b border-line/80 bg-cream/75 backdrop-blur-xl">
@@ -31,9 +46,24 @@ const Navbar = ({ children }) => {
                                 ? "text-ink"
                                 : "text-muted hover:text-ink"
                         }`}
-                    >
+                        >
                         Projects
                     </NavLink>
+                    {userData ? (
+                        <button
+                            onClick={handleLogout}
+                            className="hidden text-[13px] tracking-wide text-muted transition hover:text-ink sm:inline"
+                        >
+                            Sign out
+                        </button>
+                    ) : (
+                        <NavLink
+                            to="/auth"
+                            className="hidden text-[13px] tracking-wide text-muted transition hover:text-ink sm:inline"
+                        >
+                            Sign in
+                        </NavLink>
+                    )}
                     {children}
                 </div>
             </div>

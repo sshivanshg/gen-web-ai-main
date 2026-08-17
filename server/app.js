@@ -4,6 +4,7 @@ import cors from "cors";
 import fs from "fs";
 import { FRONTEND_URL } from "./utils/config.js";
 import morgan from "morgan";
+import authRouter from "./routes/auth.route.js";
 import websiteRouter from "./routes/website.route.js";
 import billingRouter from "./routes/billing.route.js";
 import { stripeWebhook } from "./controllers/stripeWebhook.controller.js";
@@ -70,6 +71,7 @@ app.use(
 
 app.use("/api/website", websiteRouter);
 app.use("/api/billing", billingRouter);
+app.use("/api/auth", authRouter);
 
 const clientDist = path.resolve(__dirname, "../client/dist");
 const clientIndex = path.join(clientDist, "index.html");

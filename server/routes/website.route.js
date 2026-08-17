@@ -7,15 +7,16 @@ import {
     getWebsiteById,
     getWebsiteBySlug,
 } from "../controllers/website.controller.js";
+import { requireAuth } from "../utils/auth.js";
 
 const websiteRouter = express.Router();
 
-websiteRouter.post("/generate", generateWebsite);
-websiteRouter.post("/update/:id", changes);
+websiteRouter.post("/generate", requireAuth, generateWebsite);
+websiteRouter.post("/update/:id", requireAuth, changes);
 
-websiteRouter.get("/get-by-id/:id", getWebsiteById);
+websiteRouter.get("/get-by-id/:id", requireAuth, getWebsiteById);
 websiteRouter.get("/get-by-slug/:slug", getWebsiteBySlug);
-websiteRouter.get("/get-all", getAll);
-websiteRouter.get("/deploy/:id", deploy);
+websiteRouter.get("/get-all", requireAuth, getAll);
+websiteRouter.get("/deploy/:id", requireAuth, deploy);
 
 export default websiteRouter;
