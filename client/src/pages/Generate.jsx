@@ -12,15 +12,15 @@ import Navbar from "../components/Navbar";
 import { BRAND } from "../brand";
 
 const PHASES = [
-    "Listening to the idea...",
-    "Sketching structure...",
-    "Setting type and color...",
-    "Adding motion...",
-    "Finishing the piece...",
+    "Reading the brief...",
+    "Planning the page flow...",
+    "Writing the custom code...",
+    "Checking mobile layout...",
+    "Preparing the editor...",
 ];
 
 const Generate = () => {
-    useDocumentTitle(`Compose — ${BRAND.name}`);
+    useDocumentTitle(`Generate — ${BRAND.name}`);
     const [prompt, setPrompt] = useState("");
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -101,15 +101,17 @@ const Generate = () => {
                     className="mb-14 text-center"
                 >
                     <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-muted">
-                        Compose
+                        Agentic brief
                     </p>
                     <h1 className="font-display text-4xl font-medium leading-tight tracking-tight md:text-5xl">
-                        What should we <span className="italic text-accent">make</span>?
+                        What should Shivansh Studio{" "}
+                        <span className="italic text-accent">generate</span>?
                     </h1>
 
                     <p className="mx-auto mt-5 max-w-lg font-light leading-relaxed text-muted">
-                        A few precise sentences are enough. This may take a
-                        little while — the result is meant to last.
+                        Give the agent a clear website idea. It will generate the
+                        first version, open the editor, and keep everything ready
+                        for customization and publishing.
                     </p>
                 </motion.div>
 
@@ -117,7 +119,7 @@ const Generate = () => {
                     <textarea
                         onChange={(e) => setPrompt(e.target.value)}
                         value={prompt}
-                        placeholder="A quiet ceramic studio in Kyoto, with warm paper textures, a reservation form, and a gallery of bowls…"
+                        placeholder="A simple aesthetic website for a boutique coffee studio, with warm colors, a hero, menu preview, feature cards, and a contact CTA..."
                         className="h-48 w-full resize-none rounded-2xl border border-line bg-cream p-5 text-base leading-relaxed text-ink outline-none placeholder:text-muted/70 focus:border-accent/40 sm:h-52 sm:rounded-3xl sm:p-6 sm:text-sm"
                     ></textarea>
 
@@ -133,7 +135,7 @@ const Generate = () => {
                         className={`min-h-11 w-full rounded-full px-8 py-3.5 text-sm font-medium tracking-wide sm:w-auto sm:px-12 ${prompt.trim() && !loading ? "bg-accent text-cream hover:bg-accent-dark" : "cursor-not-allowed bg-line text-muted"}`}
                         onClick={handleGenerateWebsite}
                     >
-                        Compose site
+                        Generate site
                     </motion.button>
                 </div>
 

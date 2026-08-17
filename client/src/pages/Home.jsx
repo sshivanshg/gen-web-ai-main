@@ -10,19 +10,19 @@ const Home = () => {
     useDocumentTitle(BRAND.name);
     const highlights = [
         {
-            title: "Composed, not templated",
+            title: "Brief to blueprint",
             description:
-                "Describe the feel and function. Receive complete, considered HTML built for the screen in front of you.",
+                "Describe the website you want. The agent turns your intent into structure, copy, layout, and code.",
         },
         {
-            title: "Responsive by nature",
+            title: "Customize with chat",
             description:
-                "Layouts breathe from phone to desktop — stacked, spaced, and readable without extra work.",
+                "Ask for changes in plain language and watch the site update beside the code and preview.",
         },
         {
-            title: "Ready to publish",
+            title: "Publish the final site",
             description:
-                "A finished page with real copy, motion, and structure — not a sketch waiting to be rebuilt.",
+                "When it feels right, publish a public link you can share with clients, teams, or prospects.",
         },
     ];
 
@@ -52,9 +52,9 @@ const Home = () => {
                     animate={{ y: 0, opacity: 1 }}
                     className="font-display text-5xl font-medium leading-[1.05] tracking-tight md:text-7xl"
                 >
-                    The web, made
+                    Agentic websites
                     <br />
-                    <span className="italic text-accent">quietly beautiful.</span>
+                    <span className="italic text-accent">by Shivansh.</span>
                 </motion.h1>
 
                 <motion.p
@@ -63,15 +63,15 @@ const Home = () => {
                     transition={{ delay: 0.1 }}
                     className="mx-auto mt-8 max-w-xl text-lg font-light leading-relaxed text-muted"
                 >
-                    Offer a few words. Receive a complete, responsive website —
-                    set in light, finished, and ready to share.
+                    Generate a custom website from a short brief, refine it in a
+                    live editor, then publish a shareable link in one flow.
                 </motion.p>
 
                 <button
                     className="mt-12 rounded-full bg-accent px-10 py-3.5 text-sm font-medium tracking-wide text-cream transition hover:bg-accent-dark"
                     onClick={() => navigate("/generate")}
                 >
-                    Begin
+                    Generate a site
                 </button>
             </section>
 
@@ -104,7 +104,15 @@ const Home = () => {
 
             <footer className="border-t border-line py-10 text-center text-sm font-light text-muted">
                 &copy; {new Date().getFullYear()} {BRAND.name}
-                {BRAND.kicker ? ` · ${BRAND.kicker}` : ""}
+                {BRAND.kicker ? ` · ${BRAND.kicker}` : ""} · Powered by{" "}
+                <a
+                    href="https://brixloop.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-ink transition hover:text-accent"
+                >
+                    {BRAND.poweredBy}
+                </a>
             </footer>
         </div>
     );

@@ -1,5 +1,6 @@
 export const BRAND = {
-    name: "Nextasoft",
-    kicker: "Upwork",
-    tagline: "Quietly beautiful websites.",
+    name: "Shivansh Studio",
+    kicker: "Agentic Web",
+    tagline: "Custom websites, generated and published.",
+    poweredBy: "brixloop.com",
 };

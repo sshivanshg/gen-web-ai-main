@@ -146,7 +146,7 @@ const Dashboard = () => {
                     className="mb-8 sm:mb-10"
                 >
                     <p className="mb-2 text-[11px] uppercase tracking-[0.24em] text-muted">
-                        Studio
+                        Shivansh Studio
                     </p>
                     <h1 className="font-display text-4xl font-medium tracking-tight sm:text-5xl">
                         Projects
@@ -174,14 +174,14 @@ const Dashboard = () => {
                     <div className="mx-auto mt-12 max-w-md rounded-2xl border border-dashed border-line bg-cream/60 px-6 py-12 text-center sm:mt-16 sm:rounded-3xl sm:px-8 sm:py-16">
                         <p className="font-display text-2xl">No projects yet</p>
                         <p className="mt-3 text-sm font-light text-muted">
-                            Compose a first site. Every prompt you type will live
-                            here.
+                            Generate a first custom website. Every brief and
+                            refinement will live here.
                         </p>
                         <button
                             onClick={() => navigate("/generate")}
                             className="mt-8 rounded-full bg-accent px-6 py-2.5 text-sm text-cream hover:bg-accent-dark"
                         >
-                            Begin
+                            Generate
                         </button>
                     </div>
                 )}
@@ -256,7 +256,7 @@ const Dashboard = () => {
                                     Projects
                                 </h2>
                                 <p className="text-xs tracking-wide text-muted sm:text-right">
-                                    Open, publish, or share your generated sites
+                                    Customize, publish, or share your generated sites
                                 </p>
                             </div>
                             <div className="grid gap-5 lg:grid-cols-2">

@@ -13,26 +13,26 @@ import { serverURL } from "../config";
 const plans = [
     {
         key: "free",
-        name: "Studio",
+        name: "Launch",
         price: "Free",
         note: "To begin",
-        description: "Compose and refine at your own pace.",
+        description: "Generate and refine at your own pace.",
         features: [
-            "AI site composition",
+            "Agentic site generation",
             "Responsive HTML",
             "Live preview",
         ],
         popular: false,
-        button: "Begin",
+        button: "Generate",
     },
     {
         key: "pro",
-        name: "Atelier",
+        name: "Customize",
         price: "₹499",
         note: "one-time",
-        description: "For independent makers and studios.",
+        description: "For independent makers and client work.",
         features: [
-            "Everything in Studio",
+            "Everything in Launch",
             "Faster generation",
             "Iterate and reshape",
         ],
@@ -41,13 +41,13 @@ const plans = [
     },
     {
         key: "enterprise",
-        name: "House",
+        name: "Publish",
         price: "₹1499",
         note: "one-time",
         description: "For teams that ship often.",
         features: [
             "Open iteration",
-            "Priority composition",
+            "Priority generation",
             "Shared library",
         ],
         popular: false,
@@ -116,11 +116,12 @@ const Pricing = () => {
                     Plans
                 </p>
                 <h1 className="font-display text-4xl font-medium tracking-tight md:text-5xl">
-                    Simple, considered pricing
+                    Simple pricing for custom sites
                 </h1>
 
                 <p className="mt-4 text-lg font-light text-muted">
-                    Start quietly. Grow when the work asks for it.
+                    Start with a brief. Upgrade when you need more publishing
+                    power.
                 </p>
             </motion.div>
 

@@ -40,6 +40,16 @@ const Navbar = ({ children }) => {
                         </span>
                     )}
                 </button>
+                {BRAND.poweredBy && (
+                    <a
+                        href="https://brixloop.com"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hidden text-[11px] tracking-wide text-muted transition hover:text-ink lg:inline"
+                    >
+                        Powered by {BRAND.poweredBy}
+                    </a>
+                )}
                 <div className="flex shrink-0 items-center gap-2 sm:gap-5">
                     <NavLink
                         to="/projects"

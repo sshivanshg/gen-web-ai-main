@@ -1,7 +1,7 @@
 {
-  "name": "Nextasoft",
-  "short_name": "Nextasoft",
-  "description": "AI website builder with live editing, project history, and public sharing.",
+  "name": "Shivansh Studio",
+  "short_name": "Shivansh",
+  "description": "Agentic website generation with live customization, project history, and one-click publishing. Powered by brixloop.com.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
