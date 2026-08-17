@@ -1,0 +1,19 @@
+{
+  "name": "Nextasoft",
+  "short_name": "Nextasoft",
+  "description": "AI website builder with live editing, project history, and public sharing.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4efe8",
+  "theme_color": "#faf7f2",
+  "icons": [
+    {
+      "src": "/pwa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

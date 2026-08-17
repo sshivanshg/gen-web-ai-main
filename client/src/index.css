@@ -19,6 +19,10 @@ body,
     min-height: 100%;
 }
 
+html {
+    min-height: 100dvh;
+}
+
 body {
     margin: 0;
     font-family: var(--font-sans);
@@ -30,6 +34,27 @@ body {
     );
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+@supports (min-height: 100dvh) {
+    .h-screen {
+        height: 100dvh;
+    }
+
+    .min-h-screen {
+        min-height: 100dvh;
+    }
 }
 
 ::selection {

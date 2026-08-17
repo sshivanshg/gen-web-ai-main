@@ -94,7 +94,7 @@ const Generate = () => {
                 </button>
             </Navbar>
 
-            <div className="mx-auto max-w-3xl px-6 py-16 md:py-20">
+            <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 md:py-20">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -118,7 +118,7 @@ const Generate = () => {
                         onChange={(e) => setPrompt(e.target.value)}
                         value={prompt}
                         placeholder="A quiet ceramic studio in Kyoto, with warm paper textures, a reservation form, and a gallery of bowls…"
-                        className="h-52 w-full resize-none rounded-3xl border border-line bg-cream p-6 text-sm leading-relaxed text-ink outline-none placeholder:text-muted/70 focus:border-accent/40"
+                        className="h-48 w-full resize-none rounded-2xl border border-line bg-cream p-5 text-base leading-relaxed text-ink outline-none placeholder:text-muted/70 focus:border-accent/40 sm:h-52 sm:rounded-3xl sm:p-6 sm:text-sm"
                     ></textarea>
 
                     {error && (
@@ -130,7 +130,7 @@ const Generate = () => {
                     <motion.button
                         whileTap={{ scale: 0.97 }}
                         disabled={!prompt.trim() || loading}
-                        className={`rounded-full px-12 py-3.5 text-sm font-medium tracking-wide ${prompt.trim() && !loading ? "bg-accent text-cream hover:bg-accent-dark" : "cursor-not-allowed bg-line text-muted"}`}
+                        className={`min-h-11 w-full rounded-full px-8 py-3.5 text-sm font-medium tracking-wide sm:w-auto sm:px-12 ${prompt.trim() && !loading ? "bg-accent text-cream hover:bg-accent-dark" : "cursor-not-allowed bg-line text-muted"}`}
                         onClick={handleGenerateWebsite}
                     >
                         Compose site

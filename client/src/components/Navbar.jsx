@@ -25,22 +25,22 @@ const Navbar = ({ children }) => {
 
     return (
         <header className="sticky top-0 z-50 border-b border-line/80 bg-cream/75 backdrop-blur-xl">
-            <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+            <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
                 <button
                     onClick={() => navigate("/")}
-                    className="flex items-center gap-2.5 text-ink"
+                    className="flex min-w-0 items-center gap-2.5 text-ink"
                 >
                     <span className="h-2.5 w-2.5 rounded-full bg-accent" />
-                    <span className="font-display text-[1.35rem] leading-none tracking-tight">
+                    <span className="truncate font-display text-[1.25rem] leading-none tracking-tight sm:text-[1.35rem]">
                         {BRAND.name}
                     </span>
                     {BRAND.kicker && (
-                        <span className="ml-1 rounded-full border border-line px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-muted">
+                        <span className="ml-1 hidden rounded-full border border-line px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-muted sm:inline">
                             {BRAND.kicker}
                         </span>
                     )}
                 </button>
-                <div className="flex items-center gap-5">
+                <div className="flex shrink-0 items-center gap-2 sm:gap-5">
                     <NavLink
                         to="/projects"
                         className={`hidden text-[13px] tracking-wide transition sm:inline ${

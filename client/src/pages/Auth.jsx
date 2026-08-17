@@ -51,12 +51,12 @@ const Auth = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-paper px-6 text-ink">
+        <div className="flex min-h-screen items-center justify-center bg-paper px-4 py-8 text-ink sm:px-6">
             <motion.form
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 onSubmit={submit}
-                className="w-full max-w-md rounded-3xl border border-line bg-cream p-6 shadow-[0_28px_60px_-40px_rgba(44,38,34,0.35)]"
+                className="w-full max-w-md rounded-2xl border border-line bg-cream p-5 shadow-[0_28px_60px_-40px_rgba(44,38,34,0.35)] sm:rounded-3xl sm:p-6"
             >
                 <p className="text-[11px] uppercase tracking-[0.24em] text-muted">
                     {BRAND.name}

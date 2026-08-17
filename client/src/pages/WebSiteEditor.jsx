@@ -33,11 +33,17 @@ const ChatPane = ({
             <button
                 onClick={onTitleClick}
                 className="truncate font-display text-lg font-medium"
+                title="Back to projects"
             >
                 {title}
             </button>
             {onClose && (
-                <button className="cursor-pointer lg:hidden" onClick={onClose}>
+                <button
+                    className="cursor-pointer lg:hidden"
+                    onClick={onClose}
+                    aria-label="Close chat"
+                    title="Close chat"
+                >
                     <X size={18} />
                 </button>
             )}
@@ -237,7 +243,7 @@ const WebSiteEditor = () => {
     };
 
     return (
-        <div className="flex h-screen w-screen overflow-hidden bg-paper text-ink">
+        <div className="flex h-screen w-full overflow-hidden bg-paper text-ink">
             <aside className="hidden w-80 shrink-0 flex-col border-r border-line bg-cream/80 xl:flex">
                 <ChatPane {...chatProps} />
             </aside>
@@ -271,7 +277,7 @@ const WebSiteEditor = () => {
             </div>
 
             <div className="flex min-w-0 flex-1 flex-col">
-                <div className="flex h-14 items-center justify-between border-b border-line bg-cream/80 px-4">
+                <div className="flex min-h-14 items-center justify-between gap-3 border-b border-line bg-cream/80 px-3 py-2 sm:px-4">
                     <span className="text-[11px] uppercase tracking-[0.2em] text-muted">
                         Preview
                     </span>
@@ -279,7 +285,7 @@ const WebSiteEditor = () => {
                         {!website.deployed && (
                             <button
                                 onClick={() => handleDeploy()}
-                                className="flex items-center gap-2 rounded-full bg-ink px-4 py-1.5 text-sm font-medium text-cream transition hover:bg-accent"
+                            className="flex min-h-9 items-center gap-2 rounded-full bg-ink px-3 py-1.5 text-sm font-medium text-cream transition hover:bg-accent sm:px-4"
                             >
                                 <Rocket size={14} /> Publish
                             </button>
@@ -288,18 +294,24 @@ const WebSiteEditor = () => {
                         <button
                             onClick={() => setShowChat(true)}
                             className="cursor-pointer rounded-full p-2 text-muted hover:bg-paper xl:hidden"
+                            aria-label="Open chat"
+                            title="Open chat"
                         >
                             <MessageSquare size={18} />
                         </button>
                         <button
                             className="cursor-pointer rounded-full p-2 text-muted hover:bg-paper lg:hidden"
                             onClick={() => setShowCode(true)}
+                            aria-label="Open code"
+                            title="Open code"
                         >
                             <Code2 size={18} />
                         </button>
                         <button
                             className="cursor-pointer rounded-full p-2 text-muted hover:bg-paper"
                             onClick={() => setShowFullPreview(true)}
+                            aria-label="Open full preview"
+                            title="Open full preview"
                         >
                             <Monitor size={18} />
                         </button>
@@ -309,7 +321,7 @@ const WebSiteEditor = () => {
                 <iframe
                     key={`${id}-${website.updatedAt || code.length}`}
                     srcDoc={code}
-                    className="w-full flex-1 bg-white"
+                    className="min-h-0 w-full flex-1 bg-white"
                     sandbox="allow-scripts allow-same-origin allow-forms"
                     title="Preview"
                 />
@@ -343,7 +355,11 @@ const WebSiteEditor = () => {
                             <span className="text-sm font-medium tracking-wide">
                                 index.html
                             </span>
-                            <button onClick={() => setShowCode(false)}>
+                            <button
+                                onClick={() => setShowCode(false)}
+                                aria-label="Close code"
+                                title="Close code"
+                            >
                                 <X size={18} />
                             </button>
                         </div>
@@ -379,6 +395,8 @@ const WebSiteEditor = () => {
                         <button
                             className="absolute top-4 right-4 rounded-full bg-cream/90 p-2 text-ink shadow-sm"
                             onClick={() => setShowFullPreview(false)}
+                            aria-label="Close full preview"
+                            title="Close full preview"
                         >
                             <X size={18} />
                         </button>

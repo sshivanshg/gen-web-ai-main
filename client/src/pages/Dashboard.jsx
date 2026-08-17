@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ArrowLeft, Check, RocketIcon, Share2 } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, RocketIcon, Share2 } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -31,6 +31,8 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [copiedId, setCopiedId] = useState(null);
+    const [promptHistoryOpen, setPromptHistoryOpen] = useState(false);
+    const [expandedPromptIds, setExpandedPromptIds] = useState([]);
     const focusProjectId = location.state?.focusProjectId;
     const focusedProjectRef = useRef(null);
 
@@ -112,6 +114,14 @@ const Dashboard = () => {
         }, 2000);
     };
 
+    const toggleProjectPrompts = (id) => {
+        setExpandedPromptIds((current) =>
+            current.includes(id)
+                ? current.filter((projectId) => projectId !== id)
+                : [...current, id],
+        );
+    };
+
     return (
         <div className="min-h-screen bg-paper text-ink">
             <Navbar>
@@ -129,16 +139,16 @@ const Dashboard = () => {
                 </button>
             </Navbar>
 
-            <div className="mx-auto max-w-6xl px-6 py-12">
+            <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
                 <motion.div
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-10"
+                    className="mb-8 sm:mb-10"
                 >
                     <p className="mb-2 text-[11px] uppercase tracking-[0.24em] text-muted">
                         Studio
                     </p>
-                    <h1 className="font-display text-4xl font-medium tracking-tight">
+                    <h1 className="font-display text-4xl font-medium tracking-tight sm:text-5xl">
                         Projects
                     </h1>
                     {!loading && websites.length > 0 && (
@@ -161,7 +171,7 @@ const Dashboard = () => {
                 )}
 
                 {websites.length === 0 && !loading && !error && (
-                    <div className="mx-auto mt-16 max-w-md rounded-3xl border border-dashed border-line bg-cream/60 px-8 py-16 text-center">
+                    <div className="mx-auto mt-12 max-w-md rounded-2xl border border-dashed border-line bg-cream/60 px-6 py-12 text-center sm:mt-16 sm:rounded-3xl sm:px-8 sm:py-16">
                         <p className="font-display text-2xl">No projects yet</p>
                         <p className="mt-3 text-sm font-light text-muted">
                             Compose a first site. Every prompt you type will live
@@ -177,58 +187,87 @@ const Dashboard = () => {
                 )}
 
                 {!loading && !error && websites.length > 0 && (
-                    <div className="space-y-16">
+                    <div className="space-y-10">
                         {promptLog.length > 0 && (
-                            <section>
-                                <div className="mb-5 flex items-end justify-between">
-                                    <h2 className="font-display text-2xl font-medium">
-                                        All prompts
-                                    </h2>
-                                    <p className="text-xs tracking-wide text-muted">
-                                        Everything you have typed
-                                    </p>
-                                </div>
-                                <div className="overflow-hidden rounded-3xl border border-line bg-cream/80">
-                                    {promptLog.map((entry, i) => (
-                                        <button
-                                            key={entry.id}
-                                            onClick={() =>
-                                                navigate(
-                                                    `/editor/${entry.websiteId}`,
-                                                )
-                                            }
-                                            className={`flex w-full flex-col gap-1 px-5 py-4 text-left transition hover:bg-paper/80 md:flex-row md:items-start md:gap-6 ${
-                                                i !== 0
-                                                    ? "border-t border-line"
-                                                    : ""
-                                            }`}
-                                        >
-                                            <span className="w-36 shrink-0 pt-0.5 text-[11px] uppercase tracking-[0.16em] text-muted">
-                                                {formatWhen(entry.at)}
-                                            </span>
-                                            <span className="min-w-0 flex-1">
-                                                <span className="block font-display text-lg leading-snug">
-                                                    {entry.content}
+                            <section className="overflow-hidden rounded-2xl border border-line bg-cream/80">
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setPromptHistoryOpen((open) => !open)
+                                    }
+                                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-paper/70"
+                                >
+                                    <span>
+                                        <span className="block font-display text-2xl font-medium">
+                                            Prompt history
+                                        </span>
+                                        <span className="mt-1 block text-xs tracking-wide text-muted">
+                                            {promptLog.length} total prompt
+                                            {promptLog.length === 1 ? "" : "s"}{" "}
+                                            across all projects
+                                        </span>
+                                    </span>
+                                    <ChevronDown
+                                        size={18}
+                                        className={`shrink-0 text-muted transition ${
+                                            promptHistoryOpen ? "rotate-180" : ""
+                                        }`}
+                                    />
+                                </button>
+
+                                {promptHistoryOpen && (
+                                    <div className="border-t border-line">
+                                        {promptLog.map((entry, i) => (
+                                            <button
+                                                key={entry.id}
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/editor/${entry.websiteId}`,
+                                                    )
+                                                }
+                                                className={`flex w-full flex-col gap-1 px-5 py-4 text-left transition hover:bg-paper/80 md:flex-row md:items-start md:gap-6 ${
+                                                    i !== 0
+                                                        ? "border-t border-line"
+                                                        : ""
+                                                }`}
+                                            >
+                                                <span className="w-36 shrink-0 pt-0.5 text-[11px] uppercase tracking-[0.16em] text-muted">
+                                                    {formatWhen(entry.at)}
                                                 </span>
-                                                <span className="mt-1 block text-xs text-muted">
-                                                    {entry.title} · Prompt{" "}
-                                                    {entry.step}
+                                                <span className="min-w-0 flex-1">
+                                                    <span className="block font-display text-lg leading-snug">
+                                                        {entry.content}
+                                                    </span>
+                                                    <span className="mt-1 block text-xs text-muted">
+                                                        {entry.title} · Prompt{" "}
+                                                        {entry.step}
+                                                    </span>
                                                 </span>
-                                            </span>
-                                        </button>
-                                    ))}
-                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
                             </section>
                         )}
 
                         <section>
-                            <h2 className="font-display mb-5 text-2xl font-medium">
-                                Projects
-                            </h2>
-                            <div className="space-y-8">
+                                <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                                <h2 className="font-display text-2xl font-medium">
+                                    Projects
+                                </h2>
+                                <p className="text-xs tracking-wide text-muted sm:text-right">
+                                    Open, publish, or share your generated sites
+                                </p>
+                            </div>
+                            <div className="grid gap-5 lg:grid-cols-2">
                                 {websites.map((w, i) => {
                                     const copied = copiedId === w._id;
                                     const prompts = userPrompts(w);
+                                    const expanded = expandedPromptIds.includes(
+                                        w._id,
+                                    );
+                                    const latestPrompt =
+                                        prompts[prompts.length - 1]?.content;
                                     return (
                                         <motion.article
                                             key={w._id}
@@ -240,110 +279,131 @@ const Dashboard = () => {
                                                     ? focusedProjectRef
                                                     : null
                                             }
-                                            className={`overflow-hidden rounded-3xl border bg-cream shadow-[0_24px_50px_-32px_rgba(44,38,34,0.28)] ${
+                                            className={`overflow-hidden rounded-2xl border bg-cream shadow-[0_24px_50px_-32px_rgba(44,38,34,0.28)] ${
                                                 focusProjectId === w._id
                                                     ? "border-accent/40 ring-1 ring-accent/15"
                                                     : "border-line"
                                             }`}
                                         >
-                                            <div className="grid gap-0 md:grid-cols-[220px_1fr]">
-                                                <button
-                                                    onClick={() =>
-                                                        navigate(
-                                                            `/editor/${w._id}`,
-                                                        )
-                                                    }
-                                                    className="relative h-44 bg-paper md:h-full md:min-h-[220px]"
-                                                >
-                                                    <iframe
-                                                        srcDoc={w.latestCode}
-                                                        className="pointer-events-none absolute inset-0 origin-top-left h-[140%] w-[140%] scale-[0.72] bg-white"
-                                                        title=""
-                                                    />
-                                                    <div className="absolute inset-0 bg-ink/5" />
-                                                </button>
+                                            <button
+                                                onClick={() =>
+                                                    navigate(`/editor/${w._id}`)
+                                                }
+                                                className="relative block h-44 w-full overflow-hidden border-b border-line bg-paper text-left sm:h-52"
+                                            >
+                                                <iframe
+                                                    srcDoc={w.latestCode}
+                                                    className="pointer-events-none absolute inset-0 origin-top-left h-[140%] w-[140%] scale-[0.72] bg-white"
+                                                    title=""
+                                                />
+                                                <div className="absolute inset-0 bg-ink/5" />
+                                            </button>
 
-                                                <div className="flex flex-col p-6">
-                                                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                                                        <div>
-                                                            <h3 className="font-display text-2xl font-medium">
-                                                                {w.title}
-                                                            </h3>
-                                                            <p className="mt-1 text-xs font-light tracking-wide text-muted">
-                                                                Updated{" "}
-                                                                {formatWhen(
-                                                                    w.updatedAt,
-                                                                )}{" "}
-                                                                · {prompts.length}{" "}
-                                                                prompt
-                                                                {prompts.length ===
-                                                                1
-                                                                    ? ""
-                                                                    : "s"}
-                                                            </p>
-                                                        </div>
-                                                        <div className="flex shrink-0 gap-2">
-                                                            <button
-                                                                onClick={() =>
-                                                                    navigate(
-                                                                        `/editor/${w._id}`,
-                                                                    )
-                                                                }
-                                                                className="rounded-full border border-line px-4 py-2 text-sm hover:border-ink/20"
-                                                            >
-                                                                Open
-                                                            </button>
-                                                            {!w.deployed ? (
-                                                                <button
-                                                                    onClick={() =>
-                                                                        handleDeploy(
-                                                                            w._id,
-                                                                        )
-                                                                    }
-                                                                    className="flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-medium text-cream hover:bg-accent"
-                                                                >
-                                                                    <RocketIcon
-                                                                        size={14}
-                                                                    />
-                                                                    Publish
-                                                                </button>
-                                                            ) : (
-                                                                <button
-                                                                    onClick={() =>
-                                                                        handleCopy(
-                                                                            w,
-                                                                        )
-                                                                    }
-                                                                    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${
-                                                                        copied
-                                                                            ? "border border-line bg-paper"
-                                                                            : "border border-line hover:border-ink/20"
-                                                                    }`}
-                                                                >
-                                                                    {copied ? (
-                                                                        <>
-                                                                            <Check
-                                                                                size={14}
-                                                                            />
-                                                                            Copied
-                                                                        </>
-                                                                    ) : (
-                                                                        <>
-                                                                            <Share2
-                                                                                size={14}
-                                                                            />
-                                                                            Share
-                                                                        </>
-                                                                    )}
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mt-6">
-                                                        <p className="mb-3 text-[11px] uppercase tracking-[0.2em] text-muted">
-                                                            Prompts
+                                            <div className="p-4 sm:p-5">
+                                                <div className="flex items-start justify-between gap-3 sm:gap-4">
+                                                    <div className="min-w-0">
+                                                        <h3 className="line-clamp-2 font-display text-2xl font-medium leading-tight">
+                                                            {w.title}
+                                                        </h3>
+                                                        <p className="mt-1 text-xs font-light tracking-wide text-muted">
+                                                            Updated{" "}
+                                                            {formatWhen(
+                                                                w.updatedAt,
+                                                            )}{" "}
+                                                            · {prompts.length} prompt
+                                                            {prompts.length === 1
+                                                                ? ""
+                                                                : "s"}
                                                         </p>
+                                                    </div>
+                                                    <span
+                                                        className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-medium ${
+                                                            w.deployed
+                                                                ? "bg-paper text-muted"
+                                                                : "bg-ink text-cream"
+                                                        }`}
+                                                    >
+                                                        {w.deployed
+                                                            ? "Published"
+                                                            : "Draft"}
+                                                    </span>
+                                                </div>
+
+                                                {latestPrompt && (
+                                                    <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-ink/75">
+                                                        {latestPrompt}
+                                                    </p>
+                                                )}
+
+                                                <div className="mt-5 flex flex-wrap gap-2">
+                                                    <button
+                                                        onClick={() =>
+                                                            navigate(
+                                                                `/editor/${w._id}`,
+                                                            )
+                                                        }
+                                                        className="rounded-full border border-line px-4 py-2 text-sm hover:border-ink/20"
+                                                    >
+                                                        Open
+                                                    </button>
+                                                    {!w.deployed ? (
+                                                        <button
+                                                            onClick={() =>
+                                                                handleDeploy(
+                                                                    w._id,
+                                                                )
+                                                            }
+                                                            className="flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-medium text-cream hover:bg-accent"
+                                                        >
+                                                            <RocketIcon size={14} />
+                                                            Publish
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() =>
+                                                                handleCopy(w)
+                                                            }
+                                                            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${
+                                                                copied
+                                                                    ? "border border-line bg-paper"
+                                                                    : "border border-line hover:border-ink/20"
+                                                            }`}
+                                                        >
+                                                            {copied ? (
+                                                                <>
+                                                                    <Check size={14} />
+                                                                    Copied
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <Share2 size={14} />
+                                                                    Share
+                                                                </>
+                                                            )}
+                                                        </button>
+                                                    )}
+                                                    <button
+                                                        onClick={() =>
+                                                            toggleProjectPrompts(
+                                                                w._id,
+                                                            )
+                                                        }
+                                                        className="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-muted hover:bg-paper sm:ml-auto"
+                                                    >
+                                                        Prompts
+                                                        <ChevronDown
+                                                            size={15}
+                                                            className={`transition ${
+                                                                expanded
+                                                                    ? "rotate-180"
+                                                                    : ""
+                                                            }`}
+                                                        />
+                                                    </button>
+                                                </div>
+
+                                                {expanded && (
+                                                    <div className="mt-5 border-t border-line pt-5">
                                                         {prompts.length === 0 ? (
                                                             <p className="text-sm font-light text-muted">
                                                                 No prompts saved
@@ -369,7 +429,7 @@ const Dashboard = () => {
                                                                                     "0",
                                                                                 )}
                                                                             </span>
-                                                                            <div>
+                                                                            <div className="min-w-0">
                                                                                 <p className="text-sm leading-relaxed text-ink">
                                                                                     {
                                                                                         message.content
@@ -389,8 +449,8 @@ const Dashboard = () => {
                                                             </ol>
                                                         )}
                                                     </div>
+                                                )}
                                                 </div>
-                                            </div>
                                         </motion.article>
                                     );
                                 })}

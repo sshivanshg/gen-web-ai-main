@@ -37,7 +37,7 @@ const LiveSite = () => {
 
     if (error) {
         return (
-            <div className="flex h-screen items-center justify-center bg-paper font-light text-muted">
+            <div className="flex h-screen items-center justify-center bg-paper px-4 text-center font-light text-muted">
                 {error}
             </div>
         );
@@ -46,7 +46,7 @@ const LiveSite = () => {
         <iframe
             title="Live site"
             srcDoc={htmlPage}
-            className="h-screen w-screen border-none"
+            className="h-screen w-full border-none"
             sandbox="allow-scripts allow-same-origin allow-forms"
         />
     );
