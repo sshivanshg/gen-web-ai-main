@@ -104,6 +104,7 @@ const Home = () => {
 
             <footer className="border-t border-line py-10 text-center text-sm font-light text-muted">
                 &copy; {new Date().getFullYear()} {BRAND.name}
+                {BRAND.kicker ? ` · ${BRAND.kicker}` : ""}
             </footer>
         </div>
     );

@@ -17,6 +17,11 @@ const Navbar = ({ children }) => {
                     <span className="font-display text-[1.35rem] leading-none tracking-tight">
                         {BRAND.name}
                     </span>
+                    {BRAND.kicker && (
+                        <span className="ml-1 rounded-full border border-line px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-muted">
+                            {BRAND.kicker}
+                        </span>
+                    )}
                 </button>
                 <div className="flex items-center gap-5">
                     <NavLink
