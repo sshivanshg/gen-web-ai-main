@@ -1,286 +1,293 @@
-# GenWeb.ai - AI Website Builder
+# Nextasoft — AI Website Builder
 
 <p align="center">
-  <img src="assets/dashboard.png" alt="GenWeb.ai Dashboard Preview" width="800"/>
+  <img src="assets/dashboard.png" alt="Nextasoft dashboard preview" width="800"/>
 </p>
 
 <p align="center">
-  <a href="https://gen-web-ai-1-6qrz.onrender.com" target="_blank">
-    <img src="https://img.shields.io/badge/Live-Demo-8B5CF6?style=for-the-badge&logo=render&logoColor=white" alt="Live Demo"/>
-  </a>
-  <a href="https://github.com/reck98/gen-web-ai" target="_blank">
+  <a href="https://github.com/devxsubh/gen-web-ai-main" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo"/>
   </a>
-  <a href="https://github.com/reck98/gen-web-ai/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/License-ISC-3178C6?style=for-the-badge" alt="License"/>
-  </a>
+  <img src="https://img.shields.io/badge/License-ISC-3178C6?style=for-the-badge" alt="License"/>
   <br/>
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React 19"/>
   <img src="https://img.shields.io/badge/Express-5-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express 5"/>
   <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
   <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4"/>
   <img src="https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 8"/>
-  <img src="https://img.shields.io/badge/Firebase-Auth-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase Auth"/>
+  <img src="https://img.shields.io/badge/Anthropic-Claude-191919?style=for-the-badge&logo=anthropic&logoColor=white" alt="Anthropic Claude"/>
   <img src="https://img.shields.io/badge/Stripe-Payments-008CDD?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe Payments"/>
-  <img src="https://img.shields.io/badge/OpenRouter-AI-FF6B6B?style=for-the-badge&logo=openai&logoColor=white" alt="OpenRouter AI"/>
 </p>
 
 ---
 
-**GenWeb.ai** is a full-stack AI-powered web application that generates production-ready, responsive HTML websites from natural language prompts. Describe your idea, and the AI builds a complete multi-page website with modern UI, animations, and mobile-first responsive design.
+**Nextasoft** is a full-stack AI website builder for Upwork. Describe an idea in plain language and get a complete, responsive HTML/CSS/JS site — with live preview, conversation-style edits, and a shareable public URL.
 
 ---
 
 ## Features
 
-- **AI-Powered Generation** — Describe your website in plain English and get a complete, production-ready HTML/CSS/JS website
-- **Iterative Refinement** — Improve your website through conversation-style prompts
-- **Fully Responsive Output** — Every generated site is mobile-first and works on all screen sizes
-- **Live Code Editor** — Monaco-based editor with real-time preview
-- **One-Click Deploy** — Deploy generated websites to a shareable public URL
-- **Credit-Based System** — Purchase credits via Stripe to generate and update websites
-- **Google Authentication** — Sign in with Google via Firebase Auth
-- **Modern UI** — Built with React 19, Tailwind CSS 4, and Framer Motion
+- **AI-powered generation** — Describe the feel and function; Claude returns a full HTML document
+- **Iterative refinement** — Keep prompting to reshape layout, copy, and motion
+- **Responsive output** — Generated sites are built to work from phone to desktop
+- **Live code editor** — Monaco editor with an isolated iframe preview
+- **One-click publish** — Deploy a generated site to a public slug URL (`/site/:slug`)
+- **Project library** — Browse, reopen, and share sites from the projects dashboard
+- **Plans UI** — Studio / Atelier / House pricing screens (Stripe checkout is currently paused)
 
 ---
 
 ## Tech Stack
 
 ### Frontend (`client/`)
+
 - **React 19** with Vite 8
 - **Tailwind CSS 4** for styling
-- **Redux Toolkit** for state management
-- **Firebase Auth** for Google authentication
+- **Redux Toolkit** for client state
 - **Monaco Editor** for code editing
-- **Framer Motion** for animations
+- **Motion** for page animation
 - **Axios** for API calls
 - **React Router DOM** for routing
 
 ### Backend (`server/`)
+
 - **Express 5** REST API
-- **MongoDB + Mongoose** for database
-- **JWT** for authentication cookies
-- **Stripe** for payment processing
-- **OpenRouter API** for AI generation (DeepSeek Chat model)
-- **Morgan** for logging
+- **MongoDB + Mongoose** for persistence
+- **Anthropic Claude** (`claude-haiku-4-5`) for generation
+- **Stripe** webhook handler (checkout is currently disabled)
+- **Morgan** for request logging
+
+The server loads env from the repo root `.env`, then `server/.env`.
 
 ---
 
 ## System Architecture
 
-GenWeb.ai is designed as a full-stack, decoupled web application utilizing a **Client-Server Architecture** with **micro-service external integrations** (AI LLM, Firebase Auth, Stripe Payments). Below are the diagrams detailing the system components, data flows, and database entity relationships.
+Nextasoft is a decoupled client-server app. The React SPA talks to Express; Express orchestrates Anthropic and stores generated sites in MongoDB.
 
-### 1. High-Level Architecture Overview
+### 1. High-level overview
 
 ```mermaid
 graph TD
     subgraph Client ["Frontend (React 19 SPA)"]
-        UI["React 19 Components + Framer Motion"]
-        Redux["Redux Toolkit (Global State)"]
-        Monaco["Monaco Editor & Live Preview Iframe"]
-        FirebaseSDK["Firebase Auth Client SDK"]
+        UI["Pages: Home, Generate, Editor, Projects, Live"]
+        Redux["Redux Toolkit"]
+        Monaco["Monaco Editor and preview iframe"]
     end
 
-    subgraph Server ["Backend (Express 5 API Server)"]
-        AuthMW["Auth Middleware (JWT Validation)"]
-        AuthCtrl["Auth Controller"]
-        WebCtrl["Website Controller (AI Orchestration)"]
+    subgraph Server ["Backend (Express 5)"]
+        WebCtrl["Website Controller"]
         BillCtrl["Billing Controller"]
         WebhookCtrl["Stripe Webhook Handler"]
     end
 
-    subgraph Database ["Database Layer"]
-        MongoDB[("MongoDB (Mongoose ORM)")]
+    subgraph Database ["Database"]
+        MongoDB[("MongoDB")]
     end
 
-    subgraph External ["External Services & APIs"]
-        FirebaseAuth["Firebase Auth (Google OAuth 2.0)"]
-        OpenRouter["OpenRouter API (DeepSeek LLM)"]
-        Stripe["Stripe Payments Gateway"]
+    subgraph External ["External services"]
+        Anthropic["Anthropic Messages API"]
+        Stripe["Stripe"]
     end
 
-    %% Client Interactions
     UI --> Redux
-    Redux --> AuthMW
     Monaco <--> UI
-    FirebaseSDK --> FirebaseAuth
-
-    %% Server to DB Interactions
-    AuthCtrl --> MongoDB
+    UI -- Axios --> WebCtrl
     WebCtrl --> MongoDB
-    BillCtrl --> MongoDB
+    WebCtrl -- Prompt and JSON code payload --> Anthropic
+    BillCtrl -. Disabled while auth is off .-> Stripe
+    Stripe -- checkout.session.completed --> WebhookCtrl
     WebhookCtrl --> MongoDB
-
-    %% Server to External Integrations
-    AuthCtrl -. Verify ID Token .-> FirebaseAuth
-    WebCtrl -- Prompt & Multi-file Code Gen --> OpenRouter
-    BillCtrl -- Create Checkout Session --> Stripe
-    Stripe -- Webhook Events (checkout.session.completed) --> WebhookCtrl
 ```
 
-### 2. AI Website Generation & Refinement Workflow
+### 2. Generation and refinement
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor User
-    participant Client as React SPA (Client)
-    participant Server as Express Server
+    participant Client as React SPA
+    participant Server as Express
+    participant AI as Anthropic Claude
     participant DB as MongoDB
-    participant AI as OpenRouter (DeepSeek)
 
-    User->>Client: Enter prompt ("Create modern SaaS landing page")
-    Client->>Server: POST /api/website/generate (with JWT Auth Cookie)
-    Server->>Server: Validate Auth Token (Auth Middleware)
-    Server->>DB: Check User Credit Balance
-    
-    alt Insufficient Credits (< 50)
-        DB-->>Server: Credit balance insufficient
-        Server-->>Client: 403 Forbidden ("Not enough credits")
-    else Sufficient Credits (>= 50)
-        DB-->>Server: User verified & credits available
-        Server->>AI: Request Code Gen (System Prompt + User Prompt)
-        AI-->>Server: Return HTML / CSS / JS code payload
-        Server->>DB: Save Website document & deduct 50 credits
-        DB-->>Server: Database updated
-        Server-->>Client: 200 OK (Website Data + Generated Code)
-        Client->>User: Mount Code in Monaco & Render in Live Sandbox
-    end
+    User->>Client: Enter a prompt
+    Client->>Server: POST /api/website/generate
+    Server->>AI: System prompt plus user brief
+    AI-->>Server: JSON with message and HTML code
+    Server->>Server: Extract and validate JSON
+    Server->>DB: Save Website document
+    DB-->>Server: websiteId
+    Server-->>Client: 200 OK
+    Client->>User: Open editor with live preview
+
+    User->>Client: Ask for a change
+    Client->>Server: POST /api/website/update/:id
+    Server->>AI: Current HTML plus update request
+    AI-->>Server: Updated JSON payload
+    Server->>DB: Save new code and conversation
+    Server-->>Client: Updated code
+    Client->>User: Refresh editor and preview
 ```
 
-### 3. Data Schema & Entity Relationships
+### 3. Data model
 
 ```mermaid
 erDiagram
     USER ||--o{ WEBSITE : owns
     USER {
         string _id PK
-        string firebaseUid "Unique"
-        string email
         string name
+        string email
+        string avatar
         number credits
         string plan
         date createdAt
     }
     WEBSITE {
         string _id PK
-        string userId FK
-        string prompt
+        objectId user FK
         string title
-        string slug "Unique"
-        string code
-        boolean isDeployed
-        array conversationHistory
+        string latestCode
+        array conversations
+        boolean deployed
+        string deployedUrl
+        string slug
         date createdAt
     }
 ```
 
-### 4. Key Architectural Highlights (For Interview Discussions)
+### 4. How the pieces fit together
 
-- **Decoupled Architecture**: The React SPA communicates with the Express REST API asynchronously via Axios. Static frontend assets and backend service layers scale independently.
-- **Dual-Token Authentication Strategy**: Google OAuth authentication is initiated client-side via Firebase Auth SDK. The server verifies the token and issues an **HTTP-only JWT cookie**, mitigating XSS risks while providing secure session persistence.
-- **Credit Economy & Stripe Webhook Integration**: Website generation (50 credits) and iterative prompt updates (25 credits) enforce server-side credit validation. Stripe Checkout sessions handle purchases, with transactional credit fulfillment processed via signed Stripe webhooks.
-- **LLM Orchestration & Code Extraction**: Express acts as an orchestration engine, formatting user instructions and system design rules sent to OpenRouter (DeepSeek Chat). It validates and parses incoming LLM code payloads before storing them in MongoDB.
-- **Client-Side Live Preview Sandbox**: Generated code is rendered inside an isolated browser iframe sandbox alongside the Monaco Editor, enabling real-time code editing and live visual feedback without server roundtrips.
+- **Decoupled SPA and API** — The Vite client calls Express over HTTP. In production the server can also serve `client/dist`.
+- **LLM orchestration** — Express sends a strict system prompt, asks Claude for raw JSON (`message` + `code`), retries once if parsing fails, then stores the HTML.
+- **Isolated preview** — Generated markup is rendered in a sandboxed iframe next to Monaco, so edits show up without a server round-trip.
+- **Public slugs** — Deploy sets `deployed`, builds a slug from the title plus a short id, and exposes the site at `/site/:slug`.
+- **Auth and billing** — User, JWT, and Stripe checkout code still exists in the repo, but authentication is off and `/api/billing` currently returns an error. Generation works without a logged-in user.
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+
-- MongoDB instance (local or Atlas)
-- Firebase project (for Google Auth)
-- Stripe account
-- OpenRouter API key
 
-### 1. Clone & Install
+- Node.js 18+
+- MongoDB (local or Atlas)
+- Anthropic API key
+- Stripe keys (only if you re-enable billing)
+
+### 1. Clone and install
 
 ```bash
-git clone https://github.com/reck98/gen-web-ai.git
-cd gen-web-ai
+git clone https://github.com/devxsubh/gen-web-ai-main.git
+cd gen-web-ai-main
 
-# Install server dependencies
 cd server
 npm install
 
-# Install client dependencies
 cd ../client
 npm install
 ```
 
-### 2. Environment Variables
+### 2. Environment variables
 
-**Server** (`server/.env`):
+Copy the examples, then fill in real values. Do not commit `.env` files.
+
+**Root** (`.env`, loaded first by the server):
+
 ```env
-MONGO_URI="your_mongo_connection_string"
+JWT_SECRET="jwt_secret"
+MONGO_URI="your_mongo_uri"
+ANTHROPIC_API_KEY="your_anthropic_api_key"
 PORT="3002"
-JWT_SECRET="your_jwt_secret"
 FRONTEND_URL="http://localhost:5173"
 DB_NAME="gen-web-ai-db"
-OPENROUTER_API_KEY="your_openrouter_api_key"
 STRIPE_SECRET_KEY="your_stripe_secret_key"
 STRIPE_WEBHOOK_SECRET="your_stripe_webhook_secret"
 ```
 
+Templates also live at `.env.example` and `server/.env.example`.
+
 **Client** (`client/.env`):
+
 ```env
 VITE_FIREBASE_API_KEY="your_firebase_api_key"
 ```
 
-### 3. Run Development
+Firebase is listed as a client dependency for future auth work; the current UI does not require this key to generate sites.
+
+### 3. Run in development
 
 ```bash
-# Terminal 1: Start server
+# Terminal 1 — API (http://localhost:3002)
 cd server
 npm run dev
 
-# Terminal 2: Start client
+# Terminal 2 — client (http://localhost:5173)
 cd client
 npm run dev
 ```
 
-The client runs on `http://localhost:5173` and the API on `http://localhost:3002`.
-
-### 4. Build for Production
+### 4. Production build
 
 ```bash
 cd client
 npm run build
 ```
 
-The server automatically serves the built client from `client/dist/` when `NODE_ENV=production`.
+With `NODE_ENV=production`, the Express server serves `client/dist/` and falls back to `index.html` for client routes.
 
 ---
 
 ## API Endpoints
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/api/auth/google` | No | Google OAuth login |
-| `GET` | `/api/auth/logout` | No | Clear auth cookie |
-| `GET` | `/api/user/me` | Yes | Get current user |
-| `POST` | `/api/website/generate` | Yes | Generate a new website |
-| `POST` | `/api/website/update/:id` | Yes | Update website via AI |
-| `GET` | `/api/website/get-by-id/:id` | Yes | Get website by ID |
-| `GET` | `/api/website/get-by-slug/:slug` | No | Get website by slug (public) |
-| `GET` | `/api/website/get-all` | Yes | Get all user websites |
-| `GET` | `/api/website/deploy/:id` | Yes | Deploy website to public URL |
-| `POST` | `/api/billing` | Yes | Create Stripe checkout session |
-| `POST` | `/api/stripe/webhook` | No | Stripe webhook for payments |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/website/generate` | Generate a new website from a prompt |
+| `POST` | `/api/website/update/:id` | Refine an existing website with a follow-up prompt |
+| `GET` | `/api/website/get-by-id/:id` | Fetch a website by MongoDB id |
+| `GET` | `/api/website/get-by-slug/:slug` | Fetch a published website by slug (used on `/site/:slug`) |
+| `GET` | `/api/website/get-all` | List websites (newest first) |
+| `GET` | `/api/website/deploy/:id` | Publish the site and return a public URL |
+| `POST` | `/api/billing` | Stripe checkout (currently disabled) |
+| `POST` | `/api/stripe/webhook` | Stripe webhook for completed checkouts |
+
+Generate request body:
+
+```json
+{ "prompt": "A quiet studio site for a ceramicist in Kyoto" }
+```
+
+Successful generate response:
+
+```json
+{ "websiteId": "..." }
+```
 
 ---
 
-## Credit System
+## App routes
 
-| Plan | Price | Credits |
-|------|-------|---------|
-| Free | ₹0 | 100 |
-| Pro | ₹499 | 500 |
-| Enterprise | ₹1499 | 1000 |
+| Path | Page |
+|------|------|
+| `/` | Landing |
+| `/generate` | Compose a new site |
+| `/editor/:id` | Monaco editor and live preview |
+| `/projects` or `/dashboard` | Project library |
+| `/site/:slug` | Public deployed site |
+| `/pricing` | Studio / Atelier / House plans |
 
-- **Generating** a new website costs **50 credits**
-- **Updating** an existing website costs **25 credits**
+---
+
+## Plans
+
+| Plan | UI name | Price | Credits (stored on User) |
+|------|---------|-------|--------------------------|
+| `free` | Studio | ₹0 | 100 |
+| `pro` | Atelier | ₹499 | 500 |
+| `enterprise` | House | ₹1499 | 1000 |
+
+Credit deduction is not enforced while authentication is off. The User model and Stripe webhook still support plan and credit updates.
 
 ---
 
@@ -289,19 +296,18 @@ The server automatically serves the built client from `client/dist/` when `NODE_
 <p align="center">
   <img src="assets/dashboard.png" alt="Dashboard" width="90%"/>
   <br/>
-  <em>Dashboard — manage your generated websites</em>
+  <em>Projects — manage generated websites</em>
 </p>
 
 ---
 
 ## Links
 
-- **Live Site**: [https://gen-web-ai-1-6qrz.onrender.com](https://gen-web-ai-1-6qrz.onrender.com)
-- **GitHub Repo**: [https://github.com/reck98/gen-web-ai](https://github.com/reck98/gen-web-ai)
-- **Report Issues**: [GitHub Issues](https://github.com/reck98/gen-web-ai/issues)
+- **GitHub**: [https://github.com/devxsubh/gen-web-ai-main](https://github.com/devxsubh/gen-web-ai-main)
+- **Issues**: [https://github.com/devxsubh/gen-web-ai-main/issues](https://github.com/devxsubh/gen-web-ai-main/issues)
 
 ---
 
 ## License
 
-This project is licensed under the ISC License.
+ISC

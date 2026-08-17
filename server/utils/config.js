@@ -3,9 +3,12 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const serverEnv = path.resolve(__dirname, "../.env");
+const rootEnv = path.resolve(__dirname, "../../.env");
 
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+// Load local defaults first, then the root .env so real secrets win.
+dotenv.config({ path: serverEnv });
+dotenv.config({ path: rootEnv, override: true });
 
 export const PORT = process.env.PORT ?? 3000;
 export const MONGO_URI = process.env.MONGO_URI;

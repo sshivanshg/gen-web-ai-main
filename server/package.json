@@ -1,7 +1,7 @@
 {
-  "name": "gen-web-ai",
+  "name": "nextasoft",
   "version": "1.0.0",
-  "description": "An AI powered website to generate other websites",
+  "description": "Nextasoft — AI website builder for Upwork",
   "main": "index.js",
   "type": "module",
   "scripts": {

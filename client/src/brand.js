@@ -1,4 +1,5 @@
 export const BRAND = {
-    name: "Alba",
+    name: "Nextasoft",
+    kicker: "Upwork",
     tagline: "Quietly beautiful websites.",
 };
